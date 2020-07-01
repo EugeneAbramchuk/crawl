@@ -1392,7 +1392,7 @@ void viewwindow(bool show_updates, bool tiles_only, animation *a)
 
 #ifdef USE_TILE
             tile_draw_floor();
-            tile_draw_rays(true);
+            tile_draw_rays();
             tile_draw_map_cells();
 #endif
             _view_clear_overlays();

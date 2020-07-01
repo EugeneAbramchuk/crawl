@@ -1092,25 +1092,23 @@ void tile_place_ray(const coord_def &gc, aff_type in_range)
     tile_ray_vec[num_tile_rays++].ep = grid2show(gc);
 }
 
-void tile_draw_rays(bool reset_count)
+void tile_draw_rays()
 {
-    tileidx_t flag = 0;
-
-    for (unsigned int i = 0; i < num_tile_rays; i++)
+    for (const auto ray : tile_ray_vec)
     {
-        if (tile_ray_vec[i].in_range < AFF_YES)
+        tileidx_t flag = 0;
+        if (ray.in_range < AFF_YES)
             flag = TILE_FLAG_RAY_OOR;
-        else if (tile_ray_vec[i].in_range == AFF_YES)
+        else if (ray.in_range == AFF_YES)
             flag = TILE_FLAG_RAY;
-        else if (tile_ray_vec[i].in_range == AFF_LANDING)
+        else if (ray.in_range == AFF_LANDING)
             flag = TILE_FLAG_LANDING;
-        else if (tile_ray_vec[i].in_range == AFF_MULTIPLE)
+        else if (ray.in_range == AFF_MULTIPLE)
             flag = TILE_FLAG_RAY_MULTI;
-        env.tile_bg(tile_ray_vec[i].ep) |= flag;
+        env.tile_bg(ray.ep) |= flag;
     }
 
-    if (reset_count)
-        num_tile_rays = 0;
+    num_tile_rays = 0;
 }
 
 void tile_draw_map_cell(const coord_def& gc, bool foreground_only)
